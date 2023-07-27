@@ -14,3 +14,10 @@
            run_playbook:
             name: backup_all.yml
             post_events: true
+
+        - name: hello was said
+          condition: event.payload.text is match("hello")
+          action:
+           run_playbook:
+            name: say.yml
+            post_events: true
