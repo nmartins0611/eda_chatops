@@ -1,0 +1,21 @@
+---
+- name: Say Hello
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Send notification message via Mattermost
+      community.general.mattermost:
+       url: http://chat.ansible-automates.co.za:8065
+       api_key: 5iarcqweytnhun3a5bridhcjnr
+       attachments:
+         - text: "!!!!!! ALERT !!!!!!"
+           color: '#ff00dd'
+           title: SOMEONE SAID HELLO!
+           fields:
+            - title: Response
+              value: "Hello to you my friend"
+              short: true
+      delegate_to: localhost
