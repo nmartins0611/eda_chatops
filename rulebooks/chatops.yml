@@ -8,12 +8,12 @@
 
       rules:
 
-        - name: backup all switches
-          condition: event.payload.text is match("backup")
-          action:
-           run_playbook:
-            name: backup_all.yml
-            post_events: true
+#        - name: backup all switches
+#          condition: event.payload.text is match("backup")
+#          action:
+#           run_playbook:
+#            name: backup_all.yml
+#            post_events: true
 
         - name: hello was said
           condition: event.payload.text is match("hello")
