@@ -18,6 +18,8 @@
         - name: hello was said
           condition: event.payload.text is match("hello")
           action:
-           run_playbook:
-            name: say.yml
-            post_events: true
+           run_job_template:
+            name: Say_Hello
+            organization: Default
+            retries: 1
+            delay: 10
