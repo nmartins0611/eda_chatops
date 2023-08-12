@@ -1,0 +1,38 @@
+
+all:
+  children:
+    switches:
+      children:
+        leaf:
+          hosts:
+            ceos2:
+              ansible_become: 'yes'
+              ansible_become_method: enable
+              ansible_connection: ansible.netcommon.network_cli
+              ansible_host: podman-host
+              ansible_network_os: arista.eos.eos
+              ansible_password: 
+              ansible_port: 2002
+              ansible_user: ansible
+            ceos3:
+              ansible_become: 'yes'
+              ansible_become_method: enable
+              ansible_connection: ansible.netcommon.network_cli
+              ansible_host: podman-host
+              ansible_network_os: arista.eos.eos
+              ansible_password: 
+              ansible_port: 2003
+              ansible_user: ansible
+      hosts:
+        ceos1:
+          ansible_become: 'yes'
+          ansible_become_method: enable
+          ansible_connection: ansible.netcommon.network_cli
+          ansible_host: podman-host
+          ansible_network_os: arista.eos.eos
+          ansible_password: 
+          ansible_port: 2001
+          ansible_user: ansible
+    ungrouped:
+      hosts:
+        localhost: {}
