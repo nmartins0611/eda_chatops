@@ -1,25 +1,23 @@
 ---
-    - name: Listen for events on a webhook
-      hosts: localhost
-      sources:
-        - ansible.eda.webhook:
-            host: 0.0.0.0
-            port: 5000
+- name: Listen for events on a webhook
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
 
-      rules:
+  rules:
 
-#        - name: backup all switches
-#          condition: event.payload.text is match("backup")
-#          action:
-#           run_playbook:
-#            name: backup_all.yml
-#            post_events: true
+    - name: Update switch ceos2 from webhook
+      condition: event.payload.text is search("ceos2")
+      action:
+       run_playbook:
+        name: backup_ceos2.yml
+        post_events: true
 
-        - name: hello was said
-          condition: event.payload.text is match("hello")
-          action:
-           run_job_template:
-            name: Say_Hello
-            organization: Default
-            retries: 1
-            delay: 10
+    - name: backup all switches
+      condition: event.payload.text is match("backup")
+      action:
+       run_playbook:
+        name: backup_all.yml
+        post_events: true
