@@ -6,6 +6,10 @@
     ansible_httpapi_port: 443
     ansible_httpapi_use_ssl: true
     ansible_httpapi_validate_certs: false
+    SN_HOST: "{{ lookup('env', 'SN_HOST') }}"
+    SN_USERNAME: "{{ lookup('env', 'SN_USERNAME') }}"
+    SN_PASSWORD: "{{ lookup('env', 'SN_PASSWORD') }}"
+    
   tasks:
 
   - name: configurable backup path
@@ -13,3 +17,13 @@
       backup: yes
       backup_options:
         filename: "{{ inventory_hostname }}.cfg"
+  
+  - name: Create incident
+    servicenow.itsm.incident:
+     state: new
+     caller: "{{ lookup('env', 'SN_USERNAME') }}"
+     short_description: "Chat request logged from: {{ ansible_eda.event.channel_name }}, Trigger: {{ ansible_eda.event.trigger }}"
+     description: "Network configurations have been backed up and uploaded"
+     impact: high
+     urgency: high
+    delegate_to: localhost
