@@ -1,5 +1,5 @@
 ---
-- hosts: leaf
+- hosts: switches
   gather_facts: false
   connection: httpapi
   vars:
@@ -16,7 +16,7 @@
     arista.eos.eos_config:
       backup: yes
       backup_options:
-        filename: "{{ inventory_hostname }}.cfg"
+        filename: /tmp/"{{ inventory_hostname }}.cfg"
   
   - name: Create incident
     servicenow.itsm.incident:
@@ -24,6 +24,10 @@
      caller: "{{ lookup('env', 'SN_USERNAME') }}"
      short_description: "Chat request logged from: {{ ansible_eda.event.channel_name }}, Trigger: {{ ansible_eda.event.trigger }}"
      description: "Network configurations have been backed up and uploaded"
+     attachments:
+      - path: /tmp/"{{ inventory_hostname }}.cfg"
+      #- path: path/to/attachment.txt
+      #- path: path/to/attachment.txt
      impact: high
      urgency: high
     delegate_to: localhost
